@@ -1,11 +1,39 @@
 <!doctype html>
 <html lang="zh-Hans">
 	<head>
-		<title>Inner Frame</title>
+		<title>圆形排版</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body>
-		<p>这是一个示例 IFrame 页面</p>
+		<p>一个 IFrame 页面</p>
 	</body>
 </html>
+
+
+<script>
+
+
+// 注意：await 必须在 async 函数中使用
+async function printNetNames() {
+  try {
+    // 等待 Promise 执行完成，获取结果
+    const netNames = await eda.pcb_Net.getAllNetsName();
+    
+    // 打印结果
+    console.log("所有网络名称：", netNames);
+    
+    // 可选：格式化打印（比如用表格形式）
+    //console.table(netNames);
+    
+  } catch (error) {
+    // 捕获异常
+    console.error("获取网络名称出错：", error);
+  }
+}
+
+// 调用这个异步函数
+printNetNames();
+
+
+</script>

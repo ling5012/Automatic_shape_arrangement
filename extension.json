@@ -1,27 +1,29 @@
 {
 	"name": "auto-shape-arr",
 	"uuid": "bfb8ef17328649d29caa5af533d9a773",
-	"displayName": "PCB元件批量自动排布形状",
+	"displayName": "PCB元件批量自动排布",
 	"description": "在嘉立创EDA软件里编辑PCB时能自动批量排列元器件成各种形状，如圆形、多边形、心形、五角星形等等形状的插件。",
-	"version": "0.0.1",
-	"publisher": "",
+	"version": "0.0.2",
+	"publisher": "尘零落心",
 	"engines": {
-		"eda": "^3.0.0"
+		"eda": "^3.2.69"
 	},
 	"license": "Apache-2.0",
 	"repository": {
-		"type": "extension-store",
+		"type": "github",
 		"url": "https://github.com/ling5012/Automatic_shape_arrangement"
 	},
-	"categories": "Other",
+	"categories": "PCB",
 	"keywords": [
-		"元件、排布、自动"
+		"元件",
+		"排版",
+		"自动"
 	],
 	"images": {
 		"logo": "./images/logo.png"
 	},
-	"homepage": "",
-	"bugs": "",
+	"homepage": "http://www.2-h.cn",
+	"bugs": "https://github.com/ling5012/Automatic_shape_arrangement/issues",
 	"activationEvents": {},
 	"entry": "./dist/index",
 	"dependentExtensions": {},
@@ -29,7 +31,7 @@
 		"pcb": [
 			{
 				"id": "API SDK",
-				"title": "元件自动排版",
+				"title": "元件自动排版器",
 				"menuItems": [
 					{
 						"id": "About",
