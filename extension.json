@@ -1,9 +1,9 @@
 {
 	"name": "pro-api-sdk",
-	"uuid": "2b5d4cc459cc47c88e54533b0d274ced",
-	"displayName": "PRO API SDK",
-	"description": "嘉立创EDA & EasyEDA 专业版扩展 API 开发工具",
-	"version": "1.0.0",
+	"uuid": "bfb8ef17328649d29caa5af533d9a773",
+	"displayName": "元件形状自动布置",
+	"description": "嘉立创EDA的插件，在PCB中能自动排列各种形状，如圆形、多边形、心形、五角星形等等形状的插件。",
+	"version": "0.0.1",
 	"publisher": "",
 	"engines": {
 		"eda": "^3.0.0"
