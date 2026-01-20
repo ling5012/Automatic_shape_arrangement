@@ -21,3 +21,7 @@ export function about(): void {
 		eda.sys_I18n.text('About'),
 	);
 }
+
+export async function rotundity(): Promise<void> {
+	await eda.sys_IFrame.openIFrame('/iframe/index.html');
+}

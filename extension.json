@@ -1,8 +1,8 @@
 {
-	"name": "pro-api-sdk",
+	"name": "auto-shape-arr",
 	"uuid": "bfb8ef17328649d29caa5af533d9a773",
-	"displayName": "元件形状自动布置",
-	"description": "嘉立创EDA的插件，在PCB中能自动排列各种形状，如圆形、多边形、心形、五角星形等等形状的插件。",
+	"displayName": "PCB元件批量自动排布形状",
+	"description": "在嘉立创EDA软件里编辑PCB时能自动批量排列元器件成各种形状，如圆形、多边形、心形、五角星形等等形状的插件。",
 	"version": "0.0.1",
 	"publisher": "",
 	"engines": {
@@ -11,11 +11,11 @@
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "extension-store",
-		"url": ""
+		"url": "https://github.com/ling5012/Automatic_shape_arrangement"
 	},
 	"categories": "Other",
 	"keywords": [
-		"SDK"
+		"元件、排布、自动"
 	],
 	"images": {
 		"logo": "./images/logo.png"
@@ -26,41 +26,20 @@
 	"entry": "./dist/index",
 	"dependentExtensions": {},
 	"headerMenus": {
-		"home": [
-			{
-				"id": "API SDK",
-				"title": "API SDK",
-				"menuItems": [
-					{
-						"id": "About",
-						"title": "About...",
-						"registerFn": "about"
-					}
-				]
-			}
-		],
-		"sch": [
-			{
-				"id": "API SDK",
-				"title": "API SDK",
-				"menuItems": [
-					{
-						"id": "About",
-						"title": "About...",
-						"registerFn": "about"
-					}
-				]
-			}
-		],
 		"pcb": [
 			{
 				"id": "API SDK",
-				"title": "API SDK",
+				"title": "元件自动排版",
 				"menuItems": [
 					{
 						"id": "About",
 						"title": "About...",
 						"registerFn": "about"
+					},
+					{
+						"id": "Rotundity",
+						"title": "圆形",
+						"registerFn": "rotundity"
 					}
 				]
 			}
