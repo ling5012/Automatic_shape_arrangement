@@ -22,8 +22,8 @@
 	"images": {
 		"logo": "./images/logo.png"
 	},
-	"homepage": "http://www.2-h.cn",
-	"bugs": "https://github.com/ling5012/Automatic_shape_arrangement/issues",
+	"homepage": "",
+	"bugs": "http://2-h.cn/liuyanban/",
 	"activationEvents": {},
 	"entry": "./dist/index",
 	"dependentExtensions": {},
