@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图形排版器</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+        background: #f5f7fa;
+        padding: 30px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    /* 标签栏样式 */
+    .tabs {
+        display: flex;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .tab {
+        padding: 16px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #495057;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-bottom: 3px solid transparent;
+    }
+
+    .tab:hover {
+        background: #e9ecef;
+    }
+
+    .tab.active {
+        color: #2f88ff;
+        border-bottom: 3px solid #2f88ff;
+    }
+
+    /* 内容区域样式 */
+    .tab-content {
+        padding: 30px;
+    }
+
+    .content-section {
+        display: none;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    /* 输入行样式 */
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+        gap: 16px;
+    }
+
+    .form-label {
+        font-size: 16px;
+        color: #495057;
+        width: 80px;
+    }
+
+    .form-input {
+        flex: 1;
+        padding: 10px 14px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #2f88ff;
+        box-shadow: 0 0 0 3px rgba(47, 136, 255, 0.1);
+    }
+
+    /* 按钮样式 */
+    .btn {
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        background: #2f88ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn:hover {
+        background: #1977f3;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <!-- 顶部标签 -->
+    <div class="tabs">
+        <div class="tab active" data-tab="circle">圆形</div>
+        <div class="tab" data-tab="polygon">多边形</div>
+        <div class="tab" data-tab="heart">心形</div>
+        <div class="tab" data-tab="star">五角星形</div>
+        <!-- 以后要加第五个、第六个，直接照这个格式加就行 -->
+        <!-- <div class="tab" data-tab="xxx">新标签</div> -->
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="tab-content">
+        <!-- 圆形页面 -->
+        <div class="content-section active" id="circle">
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="mmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="milInput" placeholder="mil (1 mm = 39.3701 mil)" step="0.01" min="0">
+            </div>
+
+            <div class="form-row">
+                <button class="btn" id="generateBtn">生成</button>
+            </div>
+        </div>
+
+        <!-- 多边形页面（示例空页面） -->
+        <div class="content-section" id="polygon">
+            <h3>多边形内容将在这里显示</h3>
+        </div>
+
+        <!-- 心形页面（示例空页面） -->
+        <div class="content-section" id="heart">
+            <h3>心形内容将在这里显示</h3>
+        </div>
+
+        <!-- 五角星形页面（示例空页面） -->
+        <div class="content-section" id="star">
+            <h3>五角星形内容将在这里显示</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 标签切换逻辑
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.content-section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.dataset.tab;
+
+            // 切换标签激活状态
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // 切换内容区域
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // 单位转换：1 mm = 39.3701 mil
+    const MM_TO_MIL = 39.3701;
+
+    const mmInput = document.getElementById('mmInput');
+    const milInput = document.getElementById('milInput');
+
+    // mm 输入时同步到 mil
+    mmInput.addEventListener('input', () => {
+        const mm = parseFloat(mmInput.value) || 0;
+        milInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    // mil 输入时同步到 mm
+    milInput.addEventListener('input', () => {
+        const mil = parseFloat(milInput.value) || 0;
+        mmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    // 生成按钮
+    document.getElementById('generateBtn').addEventListener('click', () => {
+        alert(`生成圆形：半径 ${mmInput.value} mm (${milInput.value} mil)`);
+    });
+</script>
+
+</body>
+</html>
+
+
+

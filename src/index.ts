@@ -22,6 +22,6 @@ export function about(): void {
 	);
 }
 
-export async function rotundity(): Promise<void> {
-	await eda.sys_IFrame.openIFrame('/iframe/index.html');
+export async function basic_shapes(): Promise<void> {
+	await eda.sys_IFrame.openIFrame('/iframe/basic_shapes.html');
 }

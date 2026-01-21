@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图形排版器</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+
+    body {
+        background: #f5f7fa;
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    /* 主容器 */
+    .container {
+        width: 100%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    /* 形状选择栏（顶部 2～3 排） */
+    .shape-selector {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 每排 4 个 */
+        gap: 8px;
+        padding: 12px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .shape-btn {
+        padding: 10px 6px;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+        background: white;
+        cursor: pointer;
+        text-align: center;
+        font-size: 13px;
+        transition: all 0.2s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .shape-btn:hover {
+        background: #f1f7ff;
+        border-color: #2f88ff;
+        color: #2f88ff;
+    }
+
+    .shape-btn.active {
+        background: #e6f7ff;
+        border-color: #2f88ff;
+        color: #2f88ff;
+        font-weight: 600;
+    }
+
+    /* 内容区域 */
+    .content {
+        padding: 20px;
+        max-height: calc(100vh - 180px);
+        overflow-y: auto;
+    }
+
+    .content-section {
+        display: none;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    /* 输入行 */
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        gap: 10px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        color: #495057;
+        width: 60px;
+    }
+
+    .form-input {
+        flex: 1;
+        padding: 8px 10px;
+        font-size: 14px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #2f88ff;
+        box-shadow: 0 0 0 3px rgba(47, 136, 255, 0.1);
+    }
+
+    /* 按钮 */
+    .btn {
+        padding: 9px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        background: #2f88ff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn:hover {
+        background: #1977f3;
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <!-- 顶部形状选择：3 排 × 4 个 = 12 个 -->
+    <div class="shape-selector">
+        <div class="shape-btn active" data-id="circle">圆形</div>
+        <div class="shape-btn" data-id="polygon">多边形</div>
+        <div class="shape-btn" data-id="heart">心形</div>
+        <div class="shape-btn" data-id="star">五角星形</div>
+
+        <div class="shape-btn" data-id="tbd1">待开发一</div>
+        <div class="shape-btn" data-id="tbd2">待开发二</div>
+        <div class="shape-btn" data-id="tbd3">待开发三</div>
+        <div class="shape-btn" data-id="tbd4">待开发四</div>
+
+        <!-- <div class="shape-btn" data-id="tbd5">待开发五</div>
+        <div class="shape-btn" data-id="tbd6">待开发六</div>
+        <div class="shape-btn" data-id="tbd7">待开发七</div>
+        <div class="shape-btn" data-id="tbd8">待开发八</div> -->
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="content">
+        <!-- 圆形页面 -->
+        <div class="content-section active" id="circle">
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="mmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="milInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="generateBtn">生成</button>
+            </div>
+        </div>
+
+        <!-- 多边形 -->
+        <div class="content-section" id="polygon">
+            <h4>多边形设置</h4>
+        </div>
+
+        <!-- 心形 -->
+        <div class="content-section" id="heart">
+            <h4>心形设置</h4>
+        </div>
+
+        <!-- 五角星形 -->
+        <div class="content-section" id="star">
+            <h4>五角星形设置</h4>
+        </div>
+
+        <!-- 待开发页面 -->
+        <div class="content-section" id="tbd1">
+            <h4>待开发一</h4>
+        </div>
+        <div class="content-section" id="tbd2"><h4>待开发二</h4></div>
+        <div class="content-section" id="tbd3"><h4>待开发三</h4></div>
+        <div class="content-section" id="tbd4"><h4>待开发四</h4></div>
+        <div class="content-section" id="tbd5"><h4>待开发五</h4></div>
+        <div class="content-section" id="tbd6"><h4>待开发六</h4></div>
+        <div class="content-section" id="tbd7"><h4>待开发七</h4></div>
+        <div class="content-section" id="tbd8"><h4>待开发八</h4></div>
+    </div>
+</div>
+
+<script>
+    // 当前形状
+    let currentShape = "circle";
+
+    // DOM 元素
+    const shapeBtns = document.querySelectorAll(".shape-btn");
+    const contentSections = document.querySelectorAll(".content-section");
+
+    // 形状按钮点击事件
+    shapeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const shapeId = btn.dataset.id;
+
+            // 更新当前形状
+            currentShape = shapeId;
+
+            // 更新按钮选中状态
+            shapeBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // 更新内容区域
+            contentSections.forEach(section => {
+                section.classList.remove("active");
+            });
+            document.getElementById(shapeId).classList.add("active");
+        });
+    });
+
+    // mm ↔ mil 转换
+    const MM_TO_MIL = 39.3701;
+    const mmInput = document.getElementById("mmInput");
+    const milInput = document.getElementById("milInput");
+
+    mmInput.addEventListener("input", () => {
+        const mm = parseFloat(mmInput.value) || 0;
+        milInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    milInput.addEventListener("input", () => {
+        const mil = parseFloat(milInput.value) || 0;
+        mmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    // 生成按钮
+    document.getElementById("generateBtn").addEventListener("click", () => {
+        alert(`生成圆形：半径 ${mmInput.value} mm (${milInput.value} mil)`);
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
