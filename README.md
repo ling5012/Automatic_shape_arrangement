@@ -1,5 +1,5 @@
 ## Automatic_shape_arrangement
-✨这是一个立创EDA的插件，它能帮助你快捷把PCB元件排版好形状。
+✨这是一个立创EDA的插件，它能帮助你快速把PCB元件排版好形状。
 
 ## 使用用法
 -

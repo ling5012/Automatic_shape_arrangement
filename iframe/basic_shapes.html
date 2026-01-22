@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>图形排版器</title>
+<title>基础图形</title>
 <style>
     * {
         margin: 0;
@@ -134,14 +134,14 @@
         <div class="shape-btn active" data-id="circle">圆形</div>
         <div class="shape-btn" data-id="polygon">多边形</div>
         <div class="shape-btn" data-id="heart">心形</div>
-        <div class="shape-btn" data-id="star">五角星形</div>
+        <div class="shape-btn" data-id="star">五角星</div>
 
-        <div class="shape-btn" data-id="tbd1">待开发一</div>
-        <div class="shape-btn" data-id="tbd2">待开发二</div>
-        <div class="shape-btn" data-id="tbd3">待开发三</div>
-        <div class="shape-btn" data-id="tbd4">待开发四</div>
+        <div class="shape-btn" data-id="tbd1">梅花</div>
+        <div class="shape-btn" data-id="tbd2">箭头</div>
+        <div class="shape-btn" data-id="tbd3">月亮</div>
 
-        <!-- <div class="shape-btn" data-id="tbd5">待开发五</div>
+        <!-- <div class="shape-btn" data-id="tbd4">待开发四</div>
+        <div class="shape-btn" data-id="tbd5">待开发五</div>
         <div class="shape-btn" data-id="tbd6">待开发六</div>
         <div class="shape-btn" data-id="tbd7">待开发七</div>
         <div class="shape-btn" data-id="tbd8">待开发八</div> -->
@@ -190,6 +190,10 @@
     </div>
 </div>
 
+
+<script type="text/javascript" src="/iframe/js/rotundity.js" ></script>
+
+
 <script>
     // 当前形状
     let currentShape = "circle";
@@ -235,14 +239,16 @@
 
     // 生成按钮
     document.getElementById("generateBtn").addEventListener("click", () => {
-        alert(`生成圆形：半径 ${mmInput.value} mm (${milInput.value} mil)`);
+
+        arrange_rotundity(milInput.value);
+        
+
     });
+
 </script>
 
 </body>
 </html>
-
-
 
 
 
