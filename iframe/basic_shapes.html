@@ -248,6 +248,12 @@
 
 
 <script type="text/javascript" src="/iframe/js/rotundity.js" ></script>
+<script type="text/javascript" src="/iframe/js/polygon.js"></script>
+<script type="text/javascript" src="/iframe/js/heart.js"></script>
+<script type="text/javascript" src="/iframe/js/star.js"></script>
+<script type="text/javascript" src="/iframe/js/plum.js"></script>
+<script type="text/javascript" src="/iframe/js/arrow.js"></script>
+<script type="text/javascript" src="/iframe/js/moon.js"></script>
 
 
 <script>
@@ -328,7 +334,7 @@
         const radiusMil = polygonMilInput.value;
         const sides = polygonSidesInput.value;
         console.log(`生成多边形：半径 ${radiusMil} mil，边数 ${sides}`);
-        // arrange_polygon(radiusMil, sides);
+        arrange_polygon(radiusMil, sides);
     });
 
     // ========== 心形相关逻辑 ==========
@@ -349,7 +355,7 @@
     heartGenerateBtn.addEventListener("click", () => {
         const radiusMil = heartMilInput.value;
         console.log(`生成心形：半径 ${radiusMil} mil`);
-        // arrange_heart(radiusMil);
+        arrange_heart(radiusMil);
     });
 
     // ========== 五角星相关逻辑 ==========
@@ -370,7 +376,7 @@
     starGenerateBtn.addEventListener("click", () => {
         const radiusMil = starMilInput.value;
         console.log(`生成五角星：半径 ${radiusMil} mil`);
-        // arrange_star(radiusMil);
+        arrange_star(radiusMil);
     });
 
     // ========== 梅花相关逻辑 ==========
@@ -391,7 +397,7 @@
     plumGenerateBtn.addEventListener("click", () => {
         const radiusMil = plumMilInput.value;
         console.log(`生成梅花：半径 ${radiusMil} mil`);
-        // arrange_plum(radiusMil);
+        arrange_plum(radiusMil);
     });
 
     // ========== 箭头相关逻辑 ==========
@@ -412,7 +418,7 @@
     arrowGenerateBtn.addEventListener("click", () => {
         const radiusMil = arrowMilInput.value;
         console.log(`生成箭头：半径 ${radiusMil} mil`);
-        // arrange_arrow(radiusMil);
+        arrange_arrow(radiusMil);
     });
 
     // ========== 月亮相关逻辑 ==========
@@ -433,7 +439,7 @@
     moonGenerateBtn.addEventListener("click", () => {
         const radiusMil = moonMilInput.value;
         console.log(`生成月亮：半径 ${radiusMil} mil`);
-        // arrange_moon(radiusMil);
+        arrange_moon(radiusMil);
     });
 
 </script>
