@@ -139,7 +139,6 @@
         <div class="shape-btn" data-id="tbd1">梅花</div>
         <div class="shape-btn" data-id="tbd2">箭头</div>
         <div class="shape-btn" data-id="tbd3">月亮</div>
-
     </div>
 
     <!-- 内容区域 -->
@@ -175,20 +174,63 @@
 
         <!-- 心形 -->
         <div class="content-section" id="heart">
-            <h4>心形设置</h4>
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="heartMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="heartMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="heartGenerateBtn">生成</button>
+            </div>
         </div>
 
-        <!-- 五角星形 -->
+        <!-- 五角星 -->
         <div class="content-section" id="star">
-            <h4>五角星形设置</h4>
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="starMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="starMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="starGenerateBtn">生成</button>
+            </div>
         </div>
 
-        <!-- 待开发页面 -->
+        <!-- 梅花 -->
         <div class="content-section" id="tbd1">
-            <h4>待开发一</h4>
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="plumMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="plumMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="plumGenerateBtn">生成</button>
+            </div>
         </div>
-        <div class="content-section" id="tbd2"><h4>待开发二</h4></div>
-        <div class="content-section" id="tbd3"><h4>待开发三</h4></div>
+
+        <!-- 箭头 -->
+        <div class="content-section" id="tbd2">
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="arrowMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="arrowMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="arrowGenerateBtn">生成</button>
+            </div>
+        </div>
+
+        <!-- 月亮 -->
+        <div class="content-section" id="tbd3">
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="moonMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="moonMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="moonGenerateBtn">生成</button>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -233,7 +275,6 @@
     const circleMilInput = document.getElementById("circleMilInput");
     const circleGenerateBtn = document.getElementById("circleGenerateBtn");
 
-    // 圆形 mm ↔ mil 转换
     circleMmInput.addEventListener("input", () => {
         const mm = parseFloat(circleMmInput.value) || 0;
         circleMilInput.value = (mm * MM_TO_MIL).toFixed(2);
@@ -244,7 +285,6 @@
         circleMmInput.value = (mil / MM_TO_MIL).toFixed(2);
     });
 
-    // 圆形生成按钮
     circleGenerateBtn.addEventListener("click", () => {
         arrange_rotundity(circleMilInput.value);
     });
@@ -255,7 +295,6 @@
     const polygonSidesInput = document.getElementById("polygonSidesInput");
     const polygonGenerateBtn = document.getElementById("polygonGenerateBtn");
 
-    // 多边形 mm ↔ mil 转换
     polygonMmInput.addEventListener("input", () => {
         const mm = parseFloat(polygonMmInput.value) || 0;
         polygonMilInput.value = (mm * MM_TO_MIL).toFixed(2);
@@ -266,7 +305,6 @@
         polygonMmInput.value = (mil / MM_TO_MIL).toFixed(2);
     });
 
-    // 限制多边形边数在3-9之间（额外的输入校验）
     polygonSidesInput.addEventListener("input", () => {
         let sides = parseInt(polygonSidesInput.value);
         if (isNaN(sides)) sides = 3;
@@ -275,17 +313,122 @@
         polygonSidesInput.value = sides;
     });
 
-    // 多边形生成按钮
     polygonGenerateBtn.addEventListener("click", () => {
         const radiusMil = polygonMilInput.value;
         const sides = polygonSidesInput.value;
-        // 这里可以替换为多边形的生成逻辑
         console.log(`生成多边形：半径 ${radiusMil} mil，边数 ${sides}`);
-        // 示例：如果有对应的多边形生成函数，可以在这里调用
         // arrange_polygon(radiusMil, sides);
     });
+
+    // ========== 心形相关逻辑 ==========
+    const heartMmInput = document.getElementById("heartMmInput");
+    const heartMilInput = document.getElementById("heartMilInput");
+    const heartGenerateBtn = document.getElementById("heartGenerateBtn");
+
+    heartMmInput.addEventListener("input", () => {
+        const mm = parseFloat(heartMmInput.value) || 0;
+        heartMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    heartMilInput.addEventListener("input", () => {
+        const mil = parseFloat(heartMilInput.value) || 0;
+        heartMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    heartGenerateBtn.addEventListener("click", () => {
+        const radiusMil = heartMilInput.value;
+        console.log(`生成心形：半径 ${radiusMil} mil`);
+        // arrange_heart(radiusMil);
+    });
+
+    // ========== 五角星相关逻辑 ==========
+    const starMmInput = document.getElementById("starMmInput");
+    const starMilInput = document.getElementById("starMilInput");
+    const starGenerateBtn = document.getElementById("starGenerateBtn");
+
+    starMmInput.addEventListener("input", () => {
+        const mm = parseFloat(starMmInput.value) || 0;
+        starMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    starMilInput.addEventListener("input", () => {
+        const mil = parseFloat(starMilInput.value) || 0;
+        starMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    starGenerateBtn.addEventListener("click", () => {
+        const radiusMil = starMilInput.value;
+        console.log(`生成五角星：半径 ${radiusMil} mil`);
+        // arrange_star(radiusMil);
+    });
+
+    // ========== 梅花相关逻辑 ==========
+    const plumMmInput = document.getElementById("plumMmInput");
+    const plumMilInput = document.getElementById("plumMilInput");
+    const plumGenerateBtn = document.getElementById("plumGenerateBtn");
+
+    plumMmInput.addEventListener("input", () => {
+        const mm = parseFloat(plumMmInput.value) || 0;
+        plumMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    plumMilInput.addEventListener("input", () => {
+        const mil = parseFloat(plumMilInput.value) || 0;
+        plumMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    plumGenerateBtn.addEventListener("click", () => {
+        const radiusMil = plumMilInput.value;
+        console.log(`生成梅花：半径 ${radiusMil} mil`);
+        // arrange_plum(radiusMil);
+    });
+
+    // ========== 箭头相关逻辑 ==========
+    const arrowMmInput = document.getElementById("arrowMmInput");
+    const arrowMilInput = document.getElementById("arrowMilInput");
+    const arrowGenerateBtn = document.getElementById("arrowGenerateBtn");
+
+    arrowMmInput.addEventListener("input", () => {
+        const mm = parseFloat(arrowMmInput.value) || 0;
+        arrowMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    arrowMilInput.addEventListener("input", () => {
+        const mil = parseFloat(arrowMilInput.value) || 0;
+        arrowMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    arrowGenerateBtn.addEventListener("click", () => {
+        const radiusMil = arrowMilInput.value;
+        console.log(`生成箭头：半径 ${radiusMil} mil`);
+        // arrange_arrow(radiusMil);
+    });
+
+    // ========== 月亮相关逻辑 ==========
+    const moonMmInput = document.getElementById("moonMmInput");
+    const moonMilInput = document.getElementById("moonMilInput");
+    const moonGenerateBtn = document.getElementById("moonGenerateBtn");
+
+    moonMmInput.addEventListener("input", () => {
+        const mm = parseFloat(moonMmInput.value) || 0;
+        moonMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    moonMilInput.addEventListener("input", () => {
+        const mil = parseFloat(moonMilInput.value) || 0;
+        moonMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    moonGenerateBtn.addEventListener("click", () => {
+        const radiusMil = moonMilInput.value;
+        console.log(`生成月亮：半径 ${radiusMil} mil`);
+        // arrange_moon(radiusMil);
+    });
+
 </script>
 
 </body>
 </html>
+
+
 
