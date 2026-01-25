@@ -1,44 +1,85 @@
-// 生成梅花（五瓣花）顶点坐标
-function arrangePlumPoints(count, centerX, centerY, radius) {
+function arrangeDropPoints(count, centerX, centerY, radius) {
     const points = [];
-    // 梅花花瓣的缩放比例
-    const petalRadius = radius * 0.6;
 
     if (count === 1) {
         points.push({
             x: centerX,
-            y: centerY - radius
+            y: centerY + radius * 0.6   // 尖点朝下
         });
         return points;
     }
 
-    const startAngle = -Math.PI / 2;
-    const angleStep = (2 * Math.PI) / count;
-    // 梅花5个花瓣的基础角度
-    const plumAngleStep = (2 * Math.PI) / 5;
+    // 1. 生成水滴形采样点（上圆 + 下尖）
+    const sampleCount = 1000;
+    const samples = [];
 
-    for (let i = 0; i < count; i++) {
-        const angle = startAngle + i * angleStep;
-        // 计算花瓣位置（基于玫瑰线公式）
-        const t = angle;
-        const plumR = radius + petalRadius * Math.sin(5 * t); // 5瓣花的玫瑰线
+    for (let i = 0; i < sampleCount; i++) {
+        const t = (i / sampleCount) * 2 * Math.PI;
 
-        const x = centerX + plumR * Math.cos(t);
-        const y = centerY + plumR * Math.sin(t);
+        // 水滴形公式（极坐标）
+        const r = radius * (1 + 0.5 * Math.sin(3 * t));
 
-        points.push({ x, y });
+        let x = r * Math.cos(t);
+        let y = r * Math.sin(t);
+
+        // 翻转 Y，让尖点朝下
+        y = -y;
+
+        samples.push({ x, y });
+    }
+
+    // 2. 计算总长度
+    let totalLength = 0;
+    const segmentLengths = [];
+
+    for (let i = 1; i < sampleCount; i++) {
+        const dx = samples[i].x - samples[i - 1].x;
+        const dy = samples[i].y - samples[i - 1].y;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        segmentLengths.push(len);
+        totalLength += len;
+    }
+
+    // 3. 等距取点
+    const stepDistance = totalLength / count;
+    let currentDistance = 0;
+    let sampleIndex = 0;
+
+    // 第一个点
+    let first = samples[0];
+    points.push({
+        x: centerX + first.x,
+        y: centerY + first.y
+    });
+
+    for (let i = 1; i < count; i++) {
+        currentDistance += stepDistance;
+
+        while (sampleIndex < segmentLengths.length && currentDistance > 0) {
+            currentDistance -= segmentLengths[sampleIndex];
+            sampleIndex++;
+        }
+
+        if (sampleIndex >= samples.length) sampleIndex = samples.length - 1;
+
+        const p = samples[sampleIndex];
+
+        points.push({
+            x: centerX + p.x,
+            y: centerY + p.y
+        });
     }
 
     return points;
 }
 
-// 梅花排列主函数
-async function arrange_plum(para_radius) {
+async function arrange_drop(para_radius) {
+
     try {
         const validItems = await eda.pcb_SelectControl.getAllSelectedPrimitives();
         const count = validItems.length;
         console.log("选中的个数：", count);
-        
+
         if (count < 1) {
             throw new Error(`没有选中的目标`);
         }
@@ -48,11 +89,12 @@ async function arrange_plum(para_radius) {
             sum_x += validItems[i].getState_X();
             sum_y += validItems[i].getState_Y();
         }
+
         const average_x = sum_x / count;
         const average_y = sum_y / count;
         console.log("中心坐标：", average_x, average_y);
 
-        const points = arrangePlumPoints(count, average_x, average_y, para_radius);
+        const points = arrangeDropPoints(count, average_x, average_y, para_radius);
 
         for (let i = 0; i < points.length; i++) {
             validItems[i].setState_X(points[i].x);
