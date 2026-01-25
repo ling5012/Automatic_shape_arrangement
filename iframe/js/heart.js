@@ -9,34 +9,74 @@ function arrangeHeartPoints(count, centerX, centerY, radius) {
         return points;
     }
 
-    const step = (2 * Math.PI) / count;
-    let angle = 0;
+    // 1. 先生成大量采样点（1000 个），用于计算路径
+    const sampleCount = 1000;
+    const samples = [];
 
-    for (let i = 0; i < count; i++) {
-        let t = angle;
+    for (let i = 0; i < sampleCount; i++) {
+        const t = (i / sampleCount) * Math.PI * 2;
 
-        // 心形公式（原版是尖尖朝上）
+        // 心形公式（原版尖尖朝上）
         let x = 16 * Math.pow(Math.sin(t), 3);
         let y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
 
-        // 关键：翻转 Y，让尖尖朝下
+        // ------------------------------
+        // 关键：方向正确的那一版的代码
+        // 翻转两次 Y，让尖尖朝下
         y = -y;
-
-        // 再整体上下颠倒一次，让圆弧在上，尖尖在下
         y = -y;
+        // ------------------------------
 
-        // 缩放
-        const scale = radius / 16;
-        x *= scale;
-        y *= scale;
+        samples.push({ x, y });
+    }
 
-        // 平移
-        x += centerX;
-        y += centerY;
+    // 2. 计算每一段的长度，并累积总长度
+    const segmentLengths = [];
+    let totalLength = 0;
 
-        points.push({ x, y });
+    for (let i = 1; i < sampleCount; i++) {
+        const dx = samples[i].x - samples[i - 1].x;
+        const dy = samples[i].y - samples[i - 1].y;
+        const len = Math.sqrt(dx * dx + dy * dy);
+        segmentLengths.push(len);
+        totalLength += len;
+    }
 
-        angle += step;
+    // 3. 按总长度平均分配每个点的位置
+    const stepDistance = totalLength / count;
+    let currentDistance = 0;
+    let sampleIndex = 0;
+
+    // 第一个点
+    let first = samples[0];
+    let scale = radius / 16;
+
+    points.push({
+        x: centerX + first.x * scale,
+        y: centerY + first.y * scale
+    });
+
+    for (let i = 1; i < count; i++) {
+        currentDistance += stepDistance;
+
+        // 找到对应的采样点
+        while (sampleIndex < segmentLengths.length && currentDistance > 0) {
+            currentDistance -= segmentLengths[sampleIndex];
+            sampleIndex++;
+        }
+
+        // 防止越界
+        if (sampleIndex >= samples.length) sampleIndex = samples.length - 1;
+
+        const p = samples[sampleIndex];
+
+        // 缩放和平移
+        scale = radius / 16;
+
+        points.push({
+            x: centerX + p.x * scale,
+            y: centerY + p.y * scale
+        });
     }
 
     return points;

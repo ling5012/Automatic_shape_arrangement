@@ -3,7 +3,7 @@
 	"uuid": "bfb8ef17328649d29caa5af533d9a773",
 	"displayName": "PCB元件排版形状工具",
 	"description": "在立创EDA里编辑PCB时能自动排列元器件成各种形状，如圆形、多边形、心形、五角星形等等形状的插件。",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"publisher": "尘零落心",
 	"engines": {
 		"eda": "^3.2.69"
