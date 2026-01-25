@@ -149,17 +149,28 @@
         <div class="content-section active" id="circle">
             <div class="form-row">
                 <label class="form-label">半径：</label>
-                <input type="number" class="form-input" id="mmInput" placeholder="毫米 mm" step="0.01" min="0">
-                <input type="number" class="form-input" id="milInput" placeholder="mil" step="0.01" min="0">
+                <input type="number" class="form-input" id="circleMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="circleMilInput" placeholder="mil" step="0.01" min="0">
             </div>
             <div class="form-row">
-                <button class="btn" id="generateBtn">生成</button>
+                <button class="btn" id="circleGenerateBtn">生成</button>
             </div>
         </div>
 
         <!-- 多边形 -->
         <div class="content-section" id="polygon">
-            <h4>多边形设置</h4>
+            <div class="form-row">
+                <label class="form-label">半径：</label>
+                <input type="number" class="form-input" id="polygonMmInput" placeholder="毫米 mm" step="0.01" min="0">
+                <input type="number" class="form-input" id="polygonMilInput" placeholder="mil" step="0.01" min="0">
+            </div>
+            <div class="form-row">
+                <label class="form-label">边数：</label>
+                <input type="number" class="form-input" id="polygonSidesInput" placeholder="3-9 之间" step="1" min="3" max="9" value="6">
+            </div>
+            <div class="form-row">
+                <button class="btn" id="polygonGenerateBtn">生成</button>
+            </div>
         </div>
 
         <!-- 心形 -->
@@ -214,38 +225,67 @@
         });
     });
 
-    // mm ↔ mil 转换
+    // 单位转换常量
     const MM_TO_MIL = 39.3701;
-    const mmInput = document.getElementById("mmInput");
-    const milInput = document.getElementById("milInput");
 
-    mmInput.addEventListener("input", () => {
-        const mm = parseFloat(mmInput.value) || 0;
-        milInput.value = (mm * MM_TO_MIL).toFixed(2);
+    // ========== 圆形相关逻辑 ==========
+    const circleMmInput = document.getElementById("circleMmInput");
+    const circleMilInput = document.getElementById("circleMilInput");
+    const circleGenerateBtn = document.getElementById("circleGenerateBtn");
+
+    // 圆形 mm ↔ mil 转换
+    circleMmInput.addEventListener("input", () => {
+        const mm = parseFloat(circleMmInput.value) || 0;
+        circleMilInput.value = (mm * MM_TO_MIL).toFixed(2);
     });
 
-    milInput.addEventListener("input", () => {
-        const mil = parseFloat(milInput.value) || 0;
-        mmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    circleMilInput.addEventListener("input", () => {
+        const mil = parseFloat(circleMilInput.value) || 0;
+        circleMmInput.value = (mil / MM_TO_MIL).toFixed(2);
     });
 
-    // 生成按钮
-    document.getElementById("generateBtn").addEventListener("click", () => {
-
-        arrange_rotundity(milInput.value);
-        
-
+    // 圆形生成按钮
+    circleGenerateBtn.addEventListener("click", () => {
+        arrange_rotundity(circleMilInput.value);
     });
 
+    // ========== 多边形相关逻辑 ==========
+    const polygonMmInput = document.getElementById("polygonMmInput");
+    const polygonMilInput = document.getElementById("polygonMilInput");
+    const polygonSidesInput = document.getElementById("polygonSidesInput");
+    const polygonGenerateBtn = document.getElementById("polygonGenerateBtn");
+
+    // 多边形 mm ↔ mil 转换
+    polygonMmInput.addEventListener("input", () => {
+        const mm = parseFloat(polygonMmInput.value) || 0;
+        polygonMilInput.value = (mm * MM_TO_MIL).toFixed(2);
+    });
+
+    polygonMilInput.addEventListener("input", () => {
+        const mil = parseFloat(polygonMilInput.value) || 0;
+        polygonMmInput.value = (mil / MM_TO_MIL).toFixed(2);
+    });
+
+    // 限制多边形边数在3-9之间（额外的输入校验）
+    polygonSidesInput.addEventListener("input", () => {
+        let sides = parseInt(polygonSidesInput.value);
+        if (isNaN(sides)) sides = 3;
+        if (sides < 3) sides = 3;
+        if (sides > 9) sides = 9;
+        polygonSidesInput.value = sides;
+    });
+
+    // 多边形生成按钮
+    polygonGenerateBtn.addEventListener("click", () => {
+        const radiusMil = polygonMilInput.value;
+        const sides = polygonSidesInput.value;
+        // 这里可以替换为多边形的生成逻辑
+        console.log(`生成多边形：半径 ${radiusMil} mil，边数 ${sides}`);
+        // 示例：如果有对应的多边形生成函数，可以在这里调用
+        // arrange_polygon(radiusMil, sides);
+    });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
 
